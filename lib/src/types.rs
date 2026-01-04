@@ -1,6 +1,8 @@
 use crate::U256;
-use uuid::Uuid;
 use chrono::{DateTime, Utc};
+use serde::{Deserialize, Serialize};
+use uuid::Uuid;
+#[derive(Serialize, Deserialize, Clone, Debug)]
 pub struct Blockchain {
     pub blocks: Vec<Block>,
 }
@@ -8,19 +10,17 @@ impl Blockchain {
     pub fn new() -> Self {
         Blockchain { blocks: vec![] }
     }
-    pub fn add_block (&mut self, block: Block) {
+    pub fn add_block(&mut self, block: Block) {
         self.blocks.push(block);
     }
 }
+#[derive(Serialize, Deserialize, Clone, Debug)]
 pub struct Block {
     pub header: BlockHeader,
     pub transactions: Vec<Transaction>,
 }
 impl Block {
-    pub fn new(
-        header: BlockHeader,
-        transactions: Vec<Transaction>,
-    ) -> Self {
+    pub fn new(header: BlockHeader, transactions: Vec<Transaction>) -> Self {
         Block {
             header,
             transactions,
@@ -30,7 +30,8 @@ impl Block {
         todo!()
     }
 }
-pub struct BlockHeader{
+#[derive(Serialize, Deserialize, Clone, Debug)]
+pub struct BlockHeader {
     pub timestamp: DateTime<Utc>,
     pub nonce: u64,
     pub prev_block_hash: [u8; 32],
@@ -45,7 +46,7 @@ impl BlockHeader {
         merkle_root: [u8; 32],
         target: U256,
     ) -> Self {
-        BlockHeader{
+        BlockHeader {
             timestamp,
             nonce,
             prev_block_hash,
@@ -57,24 +58,24 @@ impl BlockHeader {
         todo!()
     }
 }
+#[derive(Serialize, Deserialize, Clone, Debug)]
 pub struct Transaction {
     pub inputs: Vec<TransactionInput>,
     pub outputs: Vec<TransactionOutput>,
 }
+#[derive(Serialize, Deserialize, Clone, Debug)]
 pub struct TransactionInput {
     pub prev_transaction_output_hash: [u8; 32],
     pub signature: [u8; 64],
 }
+#[derive(Serialize, Deserialize, Clone, Debug)]
 pub struct TransactionOutput {
     pub value: u64,
     pub unique_id: Uuid,
     pub pubkey: [u8; 33],
 }
 impl Transaction {
-    pub fn new(
-        inputs: Vec<TransactionInput>,
-        outputs: Vec<TransactionOutput>
-    ) -> Self {
+    pub fn new(inputs: Vec<TransactionInput>, outputs: Vec<TransactionOutput>) -> Self {
         Transaction {
             inputs: inputs,
             outputs: outputs,
