@@ -2,16 +2,7 @@ use crate::sha256::Hash;
 use crate::types::Transaction;
 
 use serde::{Deserialize, Serialize};
-#[derive(
-Serialize,
-182
-Deserialize,
-Clone,
-Copy,
-Debug,
-PartialEq,
-Eq,
-)]
+#[derive(Serialize, Deserialize, Clone, Copy, Debug, PartialEq, Eq)]
 pub struct MerkleRoot(Hash);
 impl MerkleRoot {
     // calculate the merkle root of a block's transactions
